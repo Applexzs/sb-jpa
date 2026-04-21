@@ -3,6 +3,8 @@ package com.applexzs.springboot.jpa.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "persons")
 public class Person {
@@ -12,8 +14,12 @@ public class Person {
     private Long id;
     private String name;
     private String lastname;
+
     @Column(name = "programming_language")
     private String programmingLanguage;
+
+    @Embedded
+    private Audit audit = new Audit();
 
     public Person() {
     }
@@ -29,6 +35,7 @@ public class Person {
         this.lastname = lastname;
         this.programmingLanguage = programmingLanguage;
     }
+
 
     public Long getId() {
         return id;
@@ -62,6 +69,7 @@ public class Person {
         this.programmingLanguage = programmingLanguage;
     }
 
+
     @Override
     public String toString() {
         return "Person{" +
@@ -69,6 +77,9 @@ public class Person {
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", programmingLanguage='" + programmingLanguage + '\'' +
+                ", createAt=" + audit.getCreateAt() +
+                ", updatedAt=" + audit.getUpdatedAt() +
+                ", audit=" + audit +
                 '}';
     }
 }
