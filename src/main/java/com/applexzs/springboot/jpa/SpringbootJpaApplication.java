@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -26,7 +27,14 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        subQueries();
+        whereIn();
+    }
+
+    @Transactional(readOnly = true)
+    public void whereIn(){
+        System.out.println("================== Consulta where in ==================");
+        List<Person> persons = repository.getPersonsByIds(Arrays.asList(1L, 2L, 5L, 7L));
+        persons.forEach(System.out::println);
     }
 
 

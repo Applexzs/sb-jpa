@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface IPersonRepository extends CrudRepository<Person, Long> {
 
+    @Query("select p from Person p where p.id not in ?1")
+    List<Person> getPersonsByIds(List<Long> ids);
+
     @Query("select p.name, length(p.name) from Person p where length(p.name) = (select min(length(p.name))from Person p)")
     public  List<Object[]> getShorterName();
 
